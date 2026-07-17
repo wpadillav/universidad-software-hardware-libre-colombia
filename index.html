@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Universidad del Software y Hardware Libre de Colombia</title>
+    <meta name="description" content="Universidad publica virtual basada en software libre, hardware libre, datos abiertos y soberania tecnologica. Certificacion por competencias, sin barreras de acceso.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="icon" href="assets/logo.png" type="image/png">
+    <style>
+        :root {
+            --azul-oscuro: #1a237e;
+            --azul-medio: #283593;
+            --azul-claro: #5c6bc0;
+            --turquesa: #00acc1;
+            --turquesa-claro: #4dd0e1;
+            --verde: #4caf50;
+            --naranja: #ff9800;
+            --naranja-claro: #ffb74d;
+            --gris-fondo: #f8f9fc;
+            --gris-borde: #e8ecf1;
+            --gris-texto: #6b7280;
+            --gris-oscuro: #1f2937;
+            --blanco: #ffffff;
+            --sombra: 0 4px 20px rgba(26, 35, 126, 0.08);
+            --sombra-hover: 0 8px 32px rgba(26, 35, 126, 0.14);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: var(--gris-oscuro);
+            line-height: 1.65;
+            background: var(--blanco);
+            -webkit-font-smoothing: antialiased;
+        }
+        a { text-decoration: none; transition: all 0.2s ease; }
+
+        /* ===== BARRA SUPERIOR DE PERFILES ===== */
+        .top-bar {
+            background: var(--azul-oscuro);
+            color: var(--blanco);
+            padding: 8px 0;
+            font-size: 12px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .top-bar-inner {
+            max-width: 1200px; margin: 0 auto;
+            padding: 0 24px;
+            display: flex; justify-content: flex-end; align-items: center; gap: 24px;
+        }
+        .top-bar span { color: rgba(255,255,255,0.5); }
+        .top-bar a {
+            color: rgba(255,255,255,0.75); font-weight: 500;
+        }
+        .top-bar a:hover { color: var(--blanco); }
+
+        /* ===== HEADER PRINCIPAL ===== */
+        header.site-header {
+            position: sticky; top: 0; z-index: 200;
+            background: var(--blanco);
+            border-bottom: 1px solid var(--gris-borde);
+            box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+        }
+        .header-inner {
+            max-width: 1200px; margin: 0 auto;
+            padding: 0 24px;
+            display: flex; align-items: center; justify-content: space-between;
+            height: 72px;
+        }
+        .logo-area {
+            display: flex; align-items: center; gap: 14px;
+        }
+        .logo-area img {
+            width: 50px; height: 50px; object-fit: contain;
+            border-radius: 10px;
+        }
+        .logo-text {
+            display: flex; flex-direction: column;
+        }
+        .logo-text .main-name {
+            font-size: 15px; font-weight: 800; color: var(--azul-oscuro);
+            line-height: 1.3; letter-spacing: -0.3px;
+        }
+        .logo-text .sub-name {
+            font-size: 10.5px; color: var(--gris-texto);
+            font-weight: 500; letter-spacing: 0.3px;
+        }
+
+        /* NAV */
+        .main-nav { display: flex; align-items: center; gap: 6px; }
+        .main-nav a {
+            padding: 8px 14px; border-radius: 8px;
+            font-size: 13.5px; font-weight: 600; color: var(--gris-oscuro);
+        }
+        .main-nav a:hover { background: var(--gris-fondo); color: var(--azul-oscuro); }
+        .main-nav a.btn-nav {
+            background: var(--azul-oscuro); color: var(--blanco); margin-left: 8px;
+        }
+        .main-nav a.btn-nav:hover { background: var(--azul-medio); }
+
+        .mobile-menu-btn { display: none; }
+
+        /* ===== HERO ===== */
+        .hero {
+            background: linear-gradient(160deg, var(--azul-oscuro) 0%, #1e2a8a 30%, #2a3a9e 55%, #3a52c0 80%, #4a68d8 100%);
+            color: var(--blanco);
+            padding: 90px 24px 100px;
+            position: relative; overflow: hidden;
+        }
+        .hero::before {
+            content: ''; position: absolute; top: -60px; right: -80px;
+            width: 350px; height: 350px;
+            border: 2px solid rgba(255,255,255,0.08); border-radius: 50%;
+        }
+        .hero::after {
+            content: ''; position: absolute; bottom: -100px; left: -60px;
+            width: 280px; height: 280px;
+            border: 2px solid rgba(255,255,255,0.05); border-radius: 50%;
+        }
+        .hero-inner {
+            max-width: 1100px; margin: 0 auto;
+            display: grid; grid-template-columns: 1fr 1fr; gap: 60px;
+            align-items: center; position: relative; z-index: 1;
+        }
+        .hero-content .tag {
+            display: inline-block;
+            padding: 6px 18px; border-radius: 100px;
+            background: rgba(255,255,255,0.12);
+            border: 1px solid rgba(255,255,255,0.2);
+            font-size: 11px; font-weight: 600; letter-spacing: 2.5px;
+            text-transform: uppercase; color: var(--turquesa-claro);
+            margin-bottom: 24px;
+        }
+        .hero-content h1 {
+            font-size: 40px; font-weight: 800; line-height: 1.15;
+            margin-bottom: 18px; letter-spacing: -0.5px;
+        }
+        .hero-content .hero-lema {
+            font-size: 20px; font-weight: 500; font-style: italic;
+            color: rgba(255,255,255,0.85); margin-bottom: 18px;
+        }
+        .hero-content p {
+            font-size: 15.5px; color: rgba(255,255,255,0.7);
+            line-height: 1.7; margin-bottom: 30px;
+        }
+        .hero-cta {
+            display: flex; gap: 14px; flex-wrap: wrap;
+        }
+        .hero-cta .btn {
+            padding: 14px 28px; border-radius: 10px;
+            font-weight: 600; font-size: 14px; display: inline-flex;
+            align-items: center; gap: 8px; transition: all 0.25s ease;
+        }
+        .hero-cta .btn-primary {
+            background: var(--naranja); color: var(--blanco);
+            box-shadow: 0 4px 16px rgba(255,152,0,0.3);
+        }
+        .hero-cta .btn-primary:hover {
+            background: #f57c00; transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(255,152,0,0.4);
+        }
+        .hero-cta .btn-outline {
+            background: rgba(255,255,255,0.08); color: var(--blanco);
+            border: 1.5px solid rgba(255,255,255,0.3);
+        }
+        .hero-cta .btn-outline:hover {
+            background: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.5);
+        }
+
+        .hero-visual {
+            display: flex; justify-content: center; align-items: center;
+        }
+        .hero-visual img {
+            width: 380px; max-width: 100%; filter: drop-shadow(0 20px 40px rgba(0,0,0,0.3));
+            animation: float 6s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-12px); }
+        }
+
+        /* ===== ESTADISTICAS BAR ===== */
+        .stats-bar {
+            background: var(--blanco);
+            border-bottom: 1px solid var(--gris-borde);
+            padding: 32px 24px;
+        }
+        .stats-inner {
+            max-width: 1100px; margin: 0 auto;
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px;
+        }
+        .stat-item { text-align: center; }
+        .stat-item .number {
+            font-size: 34px; font-weight: 800; color: var(--azul-oscuro);
+            line-height: 1; margin-bottom: 6px;
+        }
+        .stat-item .number span { color: var(--turquesa); }
+        .stat-item .label {
+            font-size: 12.5px; color: var(--gris-texto);
+            font-weight: 500; text-transform: uppercase; letter-spacing: 1px;
+        }
+
+        /* ===== SECTIONS GENERALES ===== */
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+        section { padding: 80px 0; }
+        .section-header {
+            text-align: center; max-width: 700px; margin: 0 auto 56px;
+        }
+        .section-header .eyebrow {
+            display: inline-block;
+            font-size: 11px; font-weight: 700; letter-spacing: 3px;
+            text-transform: uppercase; color: var(--turquesa);
+            margin-bottom: 12px;
+        }
+        .section-header h2 {
+            font-size: 32px; font-weight: 800; color: var(--azul-oscuro);
+            margin-bottom: 14px; letter-spacing: -0.4px;
+        }
+        .section-header p {
+            font-size: 16.5px; color: var(--gris-texto); line-height: 1.65;
+        }
+
+        /* ===== SOBRE EL PROYECTO ===== */
+        .sobre { background: var(--gris-fondo); }
+        .features-row {
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;
+        }
+        .feature-box {
+            background: var(--blanco); border-radius: 16px; padding: 32px 24px;
+            border: 1px solid var(--gris-borde); transition: all 0.3s ease;
+            position: relative; overflow: hidden;
+        }
+        .feature-box:hover {
+            transform: translateY(-6px); box-shadow: var(--sombra-hover);
+            border-color: transparent;
+        }
+        .feature-box .icon-wrap {
+            width: 52px; height: 52px; border-radius: 14px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 22px; margin-bottom: 18px;
+        }
+        .feature-box:nth-child(1) .icon-wrap { background: rgba(26,35,126,0.08); }
+        .feature-box:nth-child(2) .icon-wrap { background: rgba(0,172,193,0.1); }
+        .feature-box:nth-child(3) .icon-wrap { background: rgba(76,175,80,0.1); }
+        .feature-box:nth-child(4) .icon-wrap { background: rgba(255,152,0,0.1); }
+        .feature-box h3 {
+            font-size: 17px; font-weight: 700; color: var(--azul-oscuro);
+            margin-bottom: 10px;
+        }
+        .feature-box p {
+            font-size: 13.5px; color: var(--gris-texto); line-height: 1.6;
+        }
+
+        /* ===== PILARES ===== */
+        .pilares-grid {
+            display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px;
+        }
+        .pilar-card {
+            background: var(--blanco); border-radius: 16px; padding: 28px 20px;
+            text-align: center; border: 1px solid var(--gris-borde);
+            transition: all 0.3s ease;
+        }
+        .pilar-card:hover {
+            box-shadow: var(--sombra-hover); border-color: transparent;
+            transform: translateY(-4px);
+        }
+        .pilar-card .numero {
+            width: 44px; height: 44px; border-radius: 50%;
+            display: inline-flex; align-items: center; justify-content: center;
+            font-size: 15px; font-weight: 800; color: var(--blanco);
+            margin-bottom: 16px;
+        }
+        .pilar-card:nth-child(1) .numero { background: var(--azul-oscuro); }
+        .pilar-card:nth-child(2) .numero { background: var(--turquesa); }
+        .pilar-card:nth-child(3) .numero { background: var(--verde); }
+        .pilar-card:nth-child(4) .numero { background: var(--naranja); }
+        .pilar-card:nth-child(5) .numero { background: #7c4dff; }
+        .pilar-card h4 {
+            font-size: 14.5px; font-weight: 700; color: var(--azul-oscuro);
+            margin-bottom: 8px; line-height: 1.35;
+        }
+        .pilar-card p {
+            font-size: 12.5px; color: var(--gris-texto); line-height: 1.55;
+        }
+
+        /* ===== COMUNIDADES ===== */
+        .comunidades { background: var(--gris-fondo); }
+        .com-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px;
+        }
+        .com-card {
+            background: var(--blanco); border-radius: 16px;
+            overflow: hidden; border: 1px solid var(--gris-borde);
+            transition: all 0.3s ease;
+        }
+        .com-card:hover {
+            box-shadow: var(--sombra-hover); border-color: transparent;
+            transform: translateY(-4px);
+        }
+        .com-header {
+            padding: 18px 22px; font-weight: 700; font-size: 14px;
+            display: flex; align-items: center; gap: 10px;
+        }
+        .com-card.local .com-header {
+            background: linear-gradient(135deg, var(--turquesa), var(--verde));
+            color: var(--blanco);
+        }
+        .com-card.nacional .com-header {
+            background: linear-gradient(135deg, var(--azul-oscuro), var(--azul-medio));
+            color: var(--blanco);
+        }
+        .com-card.internacional .com-header {
+            background: linear-gradient(135deg, var(--naranja), var(--naranja-claro));
+            color: var(--azul-oscuro);
+        }
+        .com-body { padding: 16px 22px 18px; }
+        .com-list { list-style: none; }
+        .com-list li {
+            padding: 9px 0; border-bottom: 1px solid #f0f2f5;
+            display: flex; align-items: center; gap: 10px;
+            font-size: 13px;
+        }
+        .com-list li:last-child { border-bottom: none; }
+        .com-list a { color: var(--gris-oscuro); font-weight: 500; }
+        .com-list a:hover { color: var(--azul-oscuro); }
+        .com-list .tag {
+            font-size: 10px; padding: 3px 10px; border-radius: 100px;
+            margin-left: auto; font-weight: 600;
+        }
+        .tag-ok { background: rgba(76,175,80,0.1); color: var(--verde); }
+        .tag-soon { background: rgba(255,152,0,0.1); color: var(--naranja); }
+
+        /* ===== ESTADO LEGAL ===== */
+        .estado-table {
+            width: 100%; border-collapse: separate; border-spacing: 0;
+            border-radius: 14px; overflow: hidden;
+            border: 1px solid var(--gris-borde); font-size: 14px;
+        }
+        .estado-table thead th {
+            background: var(--azul-oscuro); color: var(--blanco);
+            padding: 16px 20px; text-align: left; font-weight: 600;
+            font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px;
+        }
+        .estado-table tbody td {
+            padding: 16px 20px; border-bottom: 1px solid var(--gris-borde);
+            background: var(--blanco);
+        }
+        .estado-table tbody tr:last-child td { border-bottom: none; }
+        .estado-table tbody tr:hover td { background: var(--gris-fondo); }
+        .status-pill {
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 5px 14px; border-radius: 100px;
+            font-size: 12px; font-weight: 600;
+        }
+        .status-ok { background: rgba(76,175,80,0.1); color: #2e7d32; }
+        .status-wait { background: rgba(255,152,0,0.1); color: #e65100; }
+
+        .legal-links {
+            display: flex; justify-content: center; gap: 12px; margin-top: 32px;
+            flex-wrap: wrap;
+        }
+        .legal-link {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 12px 22px; border-radius: 10px;
+            background: var(--blanco); color: var(--azul-oscuro);
+            font-weight: 600; font-size: 13.5px;
+            border: 1.5px solid var(--gris-borde); transition: all 0.2s;
+        }
+        .legal-link:hover {
+            border-color: var(--turquesa); box-shadow: var(--sombra);
+            color: var(--azul-oscuro); text-decoration: none;
+        }
+
+        /* ===== DOCUMENTOS ===== */
+        .docs { background: var(--gris-fondo); }
+        .docs-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+        }
+        .doc-card {
+            background: var(--blanco); border-radius: 16px; padding: 28px;
+            border: 1px solid var(--gris-borde); transition: all 0.3s ease;
+        }
+        .doc-card:hover {
+            box-shadow: var(--sombra-hover); border-color: transparent;
+            transform: translateY(-4px);
+        }
+        .doc-icon {
+            width: 48px; height: 48px; border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 20px; margin-bottom: 18px;
+        }
+        .doc-card:nth-child(1) .doc-icon { background: rgba(26,35,126,0.08); }
+        .doc-card:nth-child(2) .doc-icon { background: rgba(0,172,193,0.1); }
+        .doc-card:nth-child(3) .doc-icon { background: rgba(76,175,80,0.1); }
+        .doc-card:nth-child(4) .doc-icon { background: rgba(26,35,126,0.08); }
+        .doc-card:nth-child(5) .doc-icon { background: rgba(255,152,0,0.1); }
+        .doc-card:nth-child(6) .doc-icon { background: rgba(0,172,193,0.1); }
+        .doc-card h3 {
+            font-size: 16px; font-weight: 700; color: var(--azul-oscuro);
+            margin-bottom: 8px;
+        }
+        .doc-card p {
+            font-size: 13px; color: var(--gris-texto); line-height: 1.6; margin-bottom: 16px;
+        }
+        .doc-card .doc-btn {
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 10px 18px; border-radius: 8px;
+            background: var(--azul-oscuro); color: var(--blanco);
+            font-weight: 600; font-size: 12.5px;
+        }
+        .doc-card .doc-btn:hover {
+            background: var(--azul-medio); text-decoration: none;
+        }
+
+        /* ===== CTA ===== */
+        .cta {
+            background: linear-gradient(135deg, var(--azul-oscuro), #1e2a8a, #2a3a9e);
+            color: var(--blanco); padding: 80px 24px; text-align: center;
+            position: relative; overflow: hidden;
+        }
+        .cta::before {
+            content: ''; position: absolute; top: -80px; left: 10%;
+            width: 200px; height: 200px;
+            border: 2px solid rgba(255,255,255,0.06); border-radius: 50%;
+        }
+        .cta .container { position: relative; z-index: 1; }
+        .cta h2 {
+            font-size: 34px; font-weight: 800; margin-bottom: 14px;
+        }
+        .cta p {
+            font-size: 17px; color: rgba(255,255,255,0.75);
+            max-width: 600px; margin: 0 auto 32px;
+        }
+        .cta-buttons {
+            display: flex; justify-content: center; gap: 14px; flex-wrap: wrap;
+        }
+        .cta-buttons .btn {
+            padding: 15px 32px; border-radius: 10px; font-weight: 600;
+            font-size: 14px; display: inline-flex; align-items: center; gap: 8px;
+        }
+        .cta .btn-primary {
+            background: var(--naranja); color: var(--blanco);
+            box-shadow: 0 4px 16px rgba(255,152,0,0.3);
+        }
+        .cta .btn-primary:hover {
+            background: #f57c00; text-decoration: none;
+        }
+        .cta .btn-outline {
+            background: transparent; color: var(--blanco);
+            border: 1.5px solid rgba(255,255,255,0.3);
+        }
+        .cta .btn-outline:hover {
+            background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.5);
+            text-decoration: none;
+        }
+
+        /* ===== FOOTER ===== */
+        .site-footer {
+            background: #0d1438; color: rgba(255,255,255,0.55);
+            padding: 60px 24px 30px;
+        }
+        .footer-inner {
+            max-width: 1100px; margin: 0 auto;
+            display: grid; grid-template-columns: 1.2fr 1fr 1fr 1fr; gap: 40px;
+        }
+        .footer-brand .footer-logo-name {
+            font-size: 17px; font-weight: 800; color: var(--blanco); margin-bottom: 6px;
+        }
+        .footer-brand .footer-logo-tag {
+            font-size: 13px; font-style: italic; color: rgba(255,255,255,0.5);
+            margin-bottom: 14px;
+        }
+        .footer-brand p {
+            font-size: 13px; line-height: 1.65; color: rgba(255,255,255,0.45);
+        }
+        .footer-col h4 {
+            font-size: 12px; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 1.5px; color: var(--blanco); margin-bottom: 16px;
+        }
+        .footer-col ul { list-style: none; }
+        .footer-col ul li { margin-bottom: 8px; }
+        .footer-col ul li a {
+            color: rgba(255,255,255,0.5); font-size: 13.5px;
+        }
+        .footer-col ul li a:hover { color: var(--turquesa-claro); }
+
+        .footer-bottom {
+            max-width: 1100px; margin: 40px auto 0;
+            padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.08);
+            text-align: center; font-size: 12px; color: rgba(255,255,255,0.35);
+            line-height: 1.8;
+        }
+        .footer-bottom a { color: rgba(255,255,255,0.45); }
+        .footer-bottom a:hover { color: var(--turquesa-claro); }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1024px) {
+            .hero-inner { grid-template-columns: 1fr; gap: 40px; text-align: center; }
+            .hero-content h1 { font-size: 34px; }
+            .hero-visual { order: -1; }
+            .hero-visual img { width: 260px; }
+            .hero-cta { justify-content: center; }
+            .features-row { grid-template-columns: repeat(2, 1fr); }
+            .pilares-grid { grid-template-columns: repeat(3, 1fr); }
+            .com-grid { grid-template-columns: 1fr; }
+            .docs-grid { grid-template-columns: repeat(2, 1fr); }
+            .footer-inner { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 768px) {
+            .top-bar-inner { justify-content: center; gap: 16px; }
+            .main-nav { display: none; }
+            .mobile-menu-btn {
+                display: block; background: none; border: none;
+                font-size: 24px; cursor: pointer; color: var(--azul-oscuro);
+            }
+            .hero { padding: 60px 20px 70px; }
+            .hero-content h1 { font-size: 28px; }
+            .hero-content .hero-lema { font-size: 17px; }
+            .stats-inner { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+            .features-row { grid-template-columns: 1fr; }
+            .pilares-grid { grid-template-columns: 1fr; }
+            .docs-grid { grid-template-columns: 1fr; }
+            .footer-inner { grid-template-columns: 1fr; gap: 30px; text-align: center; }
+            .cta h2 { font-size: 26px; }
+            section { padding: 56px 0; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- BARRA SUPERIOR -->
+<div class="top-bar">
+    <div class="top-bar-inner">
+        <a href="#comunidades">Comunidades</a>
+        <span>|</span>
+        <a href="#documentos">Documentos</a>
+        <span>|</span>
+        <a href="mailto:william.padilla@gmail.com">Contacto</a>
+        <span>|</span>
+        <a href="https://github.com/wpadillav/universidad-software-hardware-libre-colombia" target="_blank">GitHub</a>
+    </div>
+</div>
+
+<!-- HEADER -->
+<header class="site-header">
+    <div class="header-inner">
+        <a href="#" class="logo-area">
+            <img src="assets/logo.png" alt="Logo Universidad del Software y Hardware Libre">
+            <div class="logo-text">
+                <span class="main-name">Universidad del Software y Hardware Libre</span>
+                <span class="sub-name">COLOMBIA</span>
+            </div>
+        </a>
+        <nav class="main-nav">
+            <a href="#proyecto">Proyecto</a>
+            <a href="#pilares">Pilares</a>
+            <a href="#comunidades">Comunidades</a>
+            <a href="#documentos">Documentos</a>
+            <a href="#legal">Proteccion Legal</a>
+            <a href="https://github.com/wpadillav/universidad-software-hardware-libre-colombia" class="btn-nav" target="_blank">GitHub</a>
+        </nav>
+        <button class="mobile-menu-btn">&#9776;</button>
+    </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-inner">
+        <div class="hero-content">
+            <div class="tag">Proyecto Estrategico Nacional 2026-2035</div>
+            <h1>Universidad del Software y Hardware Libre de Colombia</h1>
+            <div class="hero-lema">"Conocimiento y Tecnologia Abierta"</div>
+            <p>
+                Un proyecto de 9 anos para crear una universidad publica virtual donde cualquier persona,
+                sin importar su edad o formacion previa, pueda usar, estudiar, compartir y mejorar
+                el conocimiento tecnologico — con cero dependencia de plataformas propietarias.
+            </p>
+            <div class="hero-cta">
+                <a href="docs/plan-estrategico-completo.pdf" class="btn btn-primary" target="_blank">&#128196; Plan Estrategico</a>
+                <a href="https://github.com/wpadillav/universidad-software-hardware-libre-colombia" class="btn btn-outline" target="_blank">&#128187; Ver en GitHub</a>
+            </div>
+        </div>
+        <div class="hero-visual">
+            <img src="assets/logo.png" alt="Logo Universidad del Software y Hardware Libre de Colombia">
+        </div>
+    </div>
+</section>
+
+<!-- ESTADISTICAS -->
+<div class="stats-bar">
+    <div class="stats-inner">
+        <div class="stat-item">
+            <div class="number">9<span>+</span></div>
+            <div class="label">Anos de Plan</div>
+        </div>
+        <div class="stat-item">
+            <div class="number">5</div>
+            <div class="label">Fases de Implementacion</div>
+        </div>
+        <div class="stat-item">
+            <div class="number">50K<span>+</span></div>
+            <div class="label">Personas a Impactar</div>
+        </div>
+        <div class="stat-item">
+            <div class="number">100<span>%</span></div>
+            <div class="label">Software y Hardware Libre</div>
+        </div>
+    </div>
+</div>
+
+<!-- SOBRE EL PROYECTO -->
+<section id="proyecto" class="sobre">
+    <div class="container">
+        <div class="section-header">
+            <div class="eyebrow">Sobre el Proyecto</div>
+            <h2>Modelo Educativo Alternativo</h2>
+            <p>Un enfoque que rompe con las barreras tradicionales de acceso al conocimiento tecnologico en Colombia y Latinoamerica.</p>
+        </div>
+        <div class="features-row">
+            <div class="feature-box">
+                <div class="icon-wrap">&#128275;</div>
+                <h3>Libertad Absoluta</h3>
+                <p>Las cuatro libertades del software libre — usar, estudiar, compartir y mejorar — extendidas al hardware, los datos y los procesos institucionales.</p>
+            </div>
+            <div class="feature-box">
+                <div class="icon-wrap">&#127758;</div>
+                <h3>Cero Barreras de Acceso</h3>
+                <p>Edad, ubicacion, nivel educativo, condicion socioeconomica o discapacidad no son obstaculos para participar.</p>
+            </div>
+            <div class="feature-box">
+                <div class="icon-wrap">&#9881;&#65039;</div>
+                <h3>Aprender Haciendo</h3>
+                <p>Rutas modulares donde cada uno culmina en un proyecto real: servidor, red mesh, dispositivo certificado.</p>
+            </div>
+            <div class="feature-box">
+                <div class="icon-wrap">&#127942;</div>
+                <h3>Certificacion por Competencias</h3>
+                <p>Open Badges, evaluacion SENA, portafolios avanzados. Lo que importa es lo que sabes hacer.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- PILARES -->
+<section id="pilares">
+    <div class="container">
+        <div class="section-header">
+            <div class="eyebrow">Principios Rectores</div>
+            <h2>Los 5 Pilares</h2>
+            <p>Los fundamentos que guian cada decision de este proyecto.</p>
+        </div>
+        <div class="pilares-grid">
+            <div class="pilar-card">
+                <div class="numero">1</div>
+                <h4>Libertad como Valor Absoluto</h4>
+                <p>Auditable, modificable y redistribuible por la comunidad</p>
+            </div>
+            <div class="pilar-card">
+                <div class="numero">2</div>
+                <h4>Eliminacion de Barreras de Acceso</h4>
+                <p>Inclusion como caracteristica estructural del modelo</p>
+            </div>
+            <div class="pilar-card">
+                <div class="numero">3</div>
+                <h4>Democratizacion del Conocimiento Tecnico</h4>
+                <p>Tecnologia al alcance de todos, no solo de especialistas</p>
+            </div>
+            <div class="pilar-card">
+                <div class="numero">4</div>
+                <h4>Soberania Tecnologica Nacional</h4>
+                <p>Infraestructura propia sin depender de corporaciones extranjeras</p>
+            </div>
+            <div class="pilar-card">
+                <div class="numero">5</div>
+                <h4>Certificacion por Competencias</h4>
+                <p>Habilidades demostradas sobre credenciales formales tradicionales</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- COMUNIDADES -->
+<section id="comunidades" class="comunidades">
+    <div class="container">
+        <div class="section-header">
+            <div class="eyebrow">Ecosistema de Aliados</div>
+            <h2>Comunidades Aliadas</h2>
+            <p>Grupos, organizaciones y colectivos que comparten la vision de un conocimiento tecnologico libre y abierto.</p>
+        </div>
+        <div class="com-grid">
+
+            <!-- LOCALES -->
+            <div class="com-card local">
+                <div class="com-header">&#127759; Comunidades Locales — Barranquilla</div>
+                <div class="com-body">
+                    <ul class="com-list">
+                        <li>&#128187; <a href="#">Comunidad Local</a> <span class="tag tag-soon">Contactar</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- NACIONALES -->
+            <div class="com-card nacional">
+                <div class="com-header">&#127758; Comunidades Nacionales — Colombia</div>
+                <div class="com-body">
+                    <ul class="com-list">
+                        <li>&#128187; <a href="#" target="_blank">Comunidad Nacional</a> <span class="tag tag-ok">Activo</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- INTERNACIONALES -->
+            <div class="com-card internacional">
+                <div class="com-header">&#127758; Aliadas Estrategicas — Internacional</div>
+                <div class="com-body">
+                    <ul class="com-list">
+                        <li>&#128275; <a href="https://www.fsf.org" target="_blank">Free Software Foundation (FSF)</a> <span class="tag tag-ok">Referente</span></li>
+                        <li>&#128295; <a href="https://www.oshwa.org" target="_blank">Open Source Hardware Association</a> <span class="tag tag-ok">Referente</span></li>
+                        <li>&#127912; <a href="https://creativecommons.org" target="_blank">Creative Commons International</a> <span class="tag tag-ok">Referente</span></li>
+                        <li>&#128218; <a href="https://www.unesco.org" target="_blank">UNESCO — OER 2019</a> <span class="tag tag-ok">Marco</span></li>
+                        <li>&#127758; <a href="https://altermundi.net" target="_blank">Altermundi (Argentina)</a> <span class="tag tag-ok">Referente</span></li>
+                        <li>&#128222; <a href="https://www.rhizomatica.org" target="_blank">Rhizomatica (Mexico)</a> <span class="tag tag-ok">Referente</span></li>
+                        <li>&#127942; <a href="https://www.uopeople.edu" target="_blank">University of the People</a> <span class="tag tag-ok">Modelo</span></li>
+                        <li>&#127758; <a href="https://www.p2pu.org" target="_blank">P2PU — Peer 2 Peer University</a> <span class="tag tag-ok">Modelo</span></li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- ESTADO LEGAL -->
+<section id="legal">
+    <div class="container">
+        <div class="section-header">
+            <div class="eyebrow">Transparencia Institucional</div>
+            <h2>Estado de Proteccion Legal</h2>
+            <p>Seguimiento publico del estado de las herramientas de proteccion del proyecto.</p>
+        </div>
+        <table class="estado-table">
+            <thead>
+                <tr>
+                    <th>Herramienta Legal</th>
+                    <th>Estado</th>
+                    <th>Fecha</th>
+                    <th>Detalle</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Registro DNDA</strong> — Derechos de Autor</td>
+                    <td><span class="status-pill status-ok">&#10003; Registrado</span></td>
+                    <td>04/07/2026</td>
+                    <td>Radicacion No. 1-2026-130068. Obra literaria inedita.</td>
+                </tr>
+                <tr>
+                    <td><strong>GitHub Prior Art</strong> — Evidencia Publica</td>
+                    <td><span class="status-pill status-ok">&#10003; Publicado</span></td>
+                    <td>04/07/2026</td>
+                    <td>Repositorio publico con timestamp criptografico verificable.</td>
+                </tr>
+                <tr>
+                    <td><strong>Licencia CC BY-SA 4.0</strong></td>
+                    <td><span class="status-pill status-ok">&#10003; Aplicada</span></td>
+                    <td>04/07/2026</td>
+                    <td>Todos los documentos bajo Creative Commons Attribution-ShareAlike.</td>
+                </tr>
+                <tr>
+                    <td><strong>Marca Registrada (SIC)</strong></td>
+                    <td><span class="status-pill status-wait">&#9208; Pendiente</span></td>
+                    <td>Por definir</td>
+                    <td>Requiere aprox. $1.35M COP. En planificacion.</td>
+                </tr>
+                <tr>
+                    <td><strong>Fundacion sin Animo de Lucro</strong></td>
+                    <td><span class="status-pill status-wait">&#9208; Pendiente</span></td>
+                    <td>Por definir</td>
+                    <td>Requiere aprox. $300K-500K COP. Estatutos listos.</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="legal-links">
+            <a href="DECLARACION-DE-AUTORIA.md" class="legal-link" target="_blank">&#128220; Declaracion de Autoria</a>
+            <a href="LICENSE" class="legal-link" target="_blank">&#9878;&#65039; Licencia CC BY-SA 4.0</a>
+            <a href="docs/estatutos-fundacion.md" class="legal-link" target="_blank">&#128221; Estatutos de la Fundacion</a>
+        </div>
+    </div>
+</section>
+
+<!-- DOCUMENTOS -->
+<section id="documentos" class="docs">
+    <div class="container">
+        <div class="section-header">
+            <div class="eyebrow">Biblioteca Abierta</div>
+            <h2>Documentos del Proyecto</h2>
+            <p>Todo el plan estrategico de 9 anos, disponible de forma abierta y gratuita.</p>
+        </div>
+        <div class="docs-grid">
+            <div class="doc-card">
+                <div class="doc-icon">&#128196;</div>
+                <h3>Plan Estrategico Completo</h3>
+                <p>PDF con todo el plan de 9 anos, 5 fases, arquitectura, financiacion y metricas.</p>
+                <a href="docs/plan-estrategico-completo.pdf" class="doc-btn" target="_blank">Ver PDF &#8594;</a>
+            </div>
+            <div class="doc-card">
+                <div class="doc-icon">&#128218;</div>
+                <h3>Fundamentacion Filosofica</h3>
+                <p>Los 5 pilares, la vision, diferenciacion con el sistema tradicional colombiano.</p>
+                <a href="docs/fundamentacion-filosofica.md" class="doc-btn" target="_blank">Leer &#8594;</a>
+            </div>
+            <div class="doc-card">
+                <div class="doc-icon">&#127919;</div>
+                <h3>Modelo Educativo</h3>
+                <p>Rutas de aprendizaje modulares, certificacion por competencias (Open Badges, SENA).</p>
+                <a href="docs/modelo-educativo.md" class="doc-btn" target="_blank">Leer &#8594;</a>
+            </div>
+            <div class="doc-card">
+                <div class="doc-icon">&#128187;</div>
+                <h3>Infraestructura Tecnologica</h3>
+                <p>Arquitectura de 4 capas libre: Debian, Moodle, redes mesh, Open Badges.</p>
+                <a href="docs/infraestructura-tecnologica.md" class="doc-btn" target="_blank">Leer &#8594;</a>
+            </div>
+            <div class="doc-card">
+                <div class="doc-icon">&#128200;</div>
+                <h3>Plan de Implementacion</h3>
+                <p>5 fases en 9 anos: Fundacion, Plataforma, Pilotos, Escalamiento, Institucional.</p>
+                <a href="docs/plan-implementacion.md" class="doc-btn" target="_blank">Leer &#8594;</a>
+            </div>
+            <div class="doc-card">
+                <div class="doc-icon">&#128176;</div>
+                <h3>Financiacion y Sostenibilidad</h3>
+                <p>Estimacion de costos por fase, fuentes de ingreso, sostenibilidad.</p>
+                <a href="docs/financiacion.md" class="doc-btn" target="_blank">Leer &#8594;</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+    <div class="container">
+        <h2>Unete a la Construccion</h2>
+        <p>Este proyecto no se construye solo: se construye en comunidad. Si crees en la libertad del conocimiento tecnologico, hay un lugar para ti.</p>
+        <div class="cta-buttons">
+            <a href="https://github.com/wpadillav/universidad-software-hardware-libre-colombia" class="btn btn-primary" target="_blank">&#128187; Explorar en GitHub</a>
+            <a href="mailto:william.padilla@gmail.com" class="btn btn-outline">&#9993; Contactar al Autor</a>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+    <div class="footer-inner">
+        <div class="footer-brand">
+            <div class="footer-logo-name">Universidad del Software y Hardware Libre</div>
+            <div class="footer-logo-tag">"Conocimiento y Tecnologia Abierta"</div>
+            <p>Proyecto estrategico nacional para Colombia. Software libre, hardware libre, datos abiertos y soberania tecnologica.</p>
+        </div>
+        <div class="footer-col">
+            <h4>Proyecto</h4>
+            <ul>
+                <li><a href="#proyecto">Sobre el Proyecto</a></li>
+                <li><a href="#pilares">Los 5 Pilares</a></li>
+                <li><a href="#documentos">Documentos</a></li>
+                <li><a href="docs/plan-estrategico-completo.pdf" target="_blank">Plan Estrategico (PDF)</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h4>Legal</h4>
+            <ul>
+                <li><a href="DECLARACION-DE-AUTORIA.md" target="_blank">Declaracion de Autoria</a></li>
+                <li><a href="LICENSE" target="_blank">Licencia CC BY-SA 4.0</a></li>
+                <li><a href="docs/estatutos-fundacion.md" target="_blank">Estatutos de la Fundacion</a></li>
+                <li><a href="#legal">Estado de Proteccion Legal</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h4>Conectar</h4>
+            <ul>
+                <li><a href="https://github.com/wpadillav/universidad-software-hardware-libre-colombia" target="_blank">GitHub</a></li>
+                <li><a href="mailto:william.padilla@gmail.com">william.padilla@gmail.com</a></li>
+                <li><a href="#comunidades">Comunidades Aliadas</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <strong>Autor:</strong> William Enrique Padilla Vivero &middot; <strong>C.C.</strong> 72.268.263 &middot; Barranquilla, Colombia &middot; 2026<br>
+        Licenciado bajo <a href="LICENSE" target="_blank">CC BY-SA 4.0</a> &middot;
+        Repositorio: <a href="https://github.com/wpadillav/universidad-software-hardware-libre-colombia" target="_blank">github.com/wpadillav/universidad-software-hardware-libre-colombia</a>
+    </div>
+</footer>
+
+</body>
+</html>
